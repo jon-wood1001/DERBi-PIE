@@ -8,7 +8,7 @@ Created on Mon Feb 26 15:24:09 2024
 from nltk.corpus import wordnet as wn
 import csv
 
-def map_wordnet_synset_ids():
+def wordnet_synset_ids():
     synset_ids = {}  # Dictionary to store mappings of synsets to unique IDs
 
     # Iterate through each synset in WordNet
@@ -21,7 +21,7 @@ def map_wordnet_synset_ids():
 
     return synset_ids
 
-def write_to_csv(mapping, filename='synset_mapping.csv'):
+def write_to_csv(mapping, filename='synset_ids.csv'):
     with open(filename, 'w', newline='') as csvfile:
         fieldnames = ['Synset', 'ID']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -31,7 +31,7 @@ def write_to_csv(mapping, filename='synset_mapping.csv'):
             writer.writerow({'Synset': synset, 'ID': synset_id})
 
 def main():
-    synset_ids = map_wordnet_synset_ids()
+    synset_ids = wordnet_synset_ids()
     
     # Write mappings of synsets to unique IDs to CSV file
     write_to_csv(synset_ids)
