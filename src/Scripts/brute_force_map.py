@@ -2,6 +2,7 @@
 from nltk.corpus import wordnet as wn
 import csv
 import pandas as pd
+import openpyxl
 
 
 
@@ -12,11 +13,8 @@ def seperate_proper_nouns():
         synset_name = synset.name()
         synset_def = synset.definition()
         if synset_def[0].isupper():
-            proper_nouns.append(synset_name)
-            #Add it to proper noun csv
-
-            #Remove it from synset_ids
-    return
+            proper_nouns.append([synset_name,synset_def])
+    return proper_nouns
 
 #Generate the synsets that are currently unmapped to the 
 def create_mapped_database(pie_roots_dict : dict):
@@ -81,17 +79,32 @@ def save_dict(dict, name):
 
     # Specify the path where you want to save the Excel file
     path = r'../Databases/'
-    csv_file_path = path + name + r'.xlsx'
+    excel_file_path = path + name + r'.xlsx'
 
     # Write the DataFrame to an Excel file
-    df_reshaped.to_excel(csv_file_path, index=False)
+    df_reshaped.to_excel(excel_file_path, index=False)
     return
 
 # Incomplete
-# def save_list(items, name):
+def save_list(items, name):
+    # Create a new Excel workbook and select the active sheet
+    workbook = openpyxl.Workbook()
+    sheet = workbook.active
+
+    for row_index, row_data in enumerate(items, start=1):
+        for col_index, value in enumerate(row_data, start=1):
+            sheet.cell(row=row_index, column=col_index, value=value)
+
+    # Save the workbook to a file
+    path = r'../Databases/'
+    excel_file_path = path + name + r'.xlsx'
+    workbook.save(excel_file_path)
 
 def main():
     #if file doesn't exist, create unmapped database, otherwise read in unmapped database
+
+    proper_nouns = seperate_proper_nouns()
+    save_list(proper_nouns, "proper_n_synsets")
 
     pie_root_database : dict = extract_PIE_root_defs()
 
