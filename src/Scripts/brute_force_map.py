@@ -25,6 +25,7 @@ def create_mapped_database(pie_roots_dict : dict):
     for synset in wn.all_synsets():
         synset_name = synset.name()
         synset_def = synset.definition()
+        pure_name = synset_name.split('.')[0]
         if synset_def[0].isupper():
             # print(synset_name)
             count += 1
@@ -39,15 +40,24 @@ def create_mapped_database(pie_roots_dict : dict):
             else:
                 # If key doesn't exist, create a new list with the current synset_name
                 mapped_database[key] = [synset_name]
+        elif pure_name in pie_roots_dict:
+            key = pie_roots_dict[pure_name]
+            # Check if the key is already in the mapped database
+            if key in mapped_database:
+                # If key exists, append the new synset_name to the existing list
+                mapped_database[key][0] += ', ' + synset_name
+            else:
+                # If key doesn't exist, create a new list with the current synset_name
+                mapped_database[key] = [synset_name]
         #Subset method
-        for root_def in pie_roots_dict:
-            if root_def in synset_def:
-                key = pie_roots_dict[root_def]
-                if key in subset_database:
-                    subset_database[key][0] += ', ' + synset_name
-                else:
-                    # If key doesn't exist, create a new list with the current synset_name
-                    subset_database[key] = [synset_name]
+        # for root_def in pie_roots_dict:
+        #     if root_def in synset_def:
+        #         key = pie_roots_dict[root_def]
+        #         if key in subset_database:
+        #             subset_database[key][0] += ', ' + synset_name
+        #         else:
+        #             # If key doesn't exist, create a new list with the current synset_name
+        #             subset_database[key] = [synset_name]
             
     return mapped_database, subset_database
 
@@ -109,6 +119,8 @@ def main():
     pie_root_database : dict = extract_PIE_root_defs()
 
     brute_definition, brute_subset = create_mapped_database(pie_root_database)
+
+    print(len(brute_definition))
 
     save_dict(brute_definition, "brute_definition_map")
     save_dict(brute_subset, "brute_definition_subset_map")
