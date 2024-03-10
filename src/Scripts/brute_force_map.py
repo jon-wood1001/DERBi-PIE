@@ -49,15 +49,15 @@ def create_mapped_database(pie_roots_dict : dict):
             else:
                 # If key doesn't exist, create a new list with the current synset_name
                 mapped_database[key] = [synset_name]
-        #Subset method
-        # for root_def in pie_roots_dict:
-        #     if root_def in synset_def:
-        #         key = pie_roots_dict[root_def]
-        #         if key in subset_database:
-        #             subset_database[key][0] += ', ' + synset_name
-        #         else:
-        #             # If key doesn't exist, create a new list with the current synset_name
-        #             subset_database[key] = [synset_name]
+        # Subset method
+        for root_def in pie_roots_dict:
+            if root_def in synset_def:
+                key = pie_roots_dict[root_def]
+                if key in subset_database:
+                    subset_database[key][0] += ', ' + synset_name
+                else:
+                    # If key doesn't exist, create a new list with the current synset_name
+                    subset_database[key] = [synset_name]
             
     return mapped_database, subset_database
 
@@ -81,40 +81,42 @@ def extract_PIE_root_defs():
     
     return root_defs_dict
 
-def save_dict(dict, name):
+import pandas as pd
+import csv
+
+def save_dict_to_csv(dictionary, name):
     # Create a DataFrame from the dictionary
-    df = pd.DataFrame(dict)
+    df = pd.DataFrame(dictionary)
 
-    df_reshaped = pd.DataFrame([(key, value) for key, values in dict.items() for value in values], columns=['Key', 'Value'])
+    # Reshape the DataFrame
+    df_reshaped = pd.DataFrame([(key, value) for key, values in dictionary.items() for value in values], columns=['Key', 'Value'])
 
-    # Specify the path where you want to save the Excel file
+    # Specify the path where you want to save the CSV file
     path = r'../Databases/'
-    excel_file_path = path + name + r'.xlsx'
+    csv_file_path = path + name + r'.csv'
 
-    # Write the DataFrame to an Excel file
-    df_reshaped.to_excel(excel_file_path, index=False)
+    # Write the DataFrame to a CSV file
+    df_reshaped.to_csv(csv_file_path, index=False)
     return
 
-# Incomplete
-def save_list(items, name):
-    # Create a new Excel workbook and select the active sheet
-    workbook = openpyxl.Workbook()
-    sheet = workbook.active
 
-    for row_index, row_data in enumerate(items, start=1):
-        for col_index, value in enumerate(row_data, start=1):
-            sheet.cell(row=row_index, column=col_index, value=value)
-
-    # Save the workbook to a file
+def save_list_to_csv(items, name):
+    # Specify the path where you want to save the CSV file
     path = r'../Databases/'
-    excel_file_path = path + name + r'.xlsx'
-    workbook.save(excel_file_path)
+    csv_file_path = path + name + r'.csv'
+
+    # Write the list to a CSV file
+    with open(csv_file_path, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerows(items)
+    return
+
 
 def main():
     #if file doesn't exist, create unmapped database, otherwise read in unmapped database
 
     proper_nouns = seperate_proper_nouns()
-    save_list(proper_nouns, "proper_n_synsets")
+    save_list_to_csv(proper_nouns, "proper_n_synsets")
 
     pie_root_database : dict = extract_PIE_root_defs()
 
@@ -122,8 +124,8 @@ def main():
 
     print(len(brute_definition))
 
-    save_dict(brute_definition, "brute_definition_map")
-    save_dict(brute_subset, "brute_definition_subset_map")
+    save_dict_to_csv(brute_definition, "brute_definition_map")
+    save_dict_to_csv(brute_subset, "brute_definition_subset_map")
 
 
 
