@@ -81,7 +81,7 @@ def get_set_of_structural_words(target_word):
 # Load the converted model
 model = KeyedVectors.load_word2vec_format(word2vec_output_file, binary=False)
 # Load the CSV file
-data = pd.read_csv("./derbipie/DERBi-PIE/expanded_cleaned_data.csv")
+data = pd.read_csv("./../../Databases/expanded_cleaned_data.csv")
 
 # Set to collect unique, WordNet-verified words
 unique_words = set()
