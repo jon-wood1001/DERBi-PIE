@@ -2,16 +2,15 @@
 from nltk.corpus import wordnet as wn
 import csv
 import pandas as pd
-import openpyxl
-
-
 
 # Potential proper nouns in wordnet database
 def seperate_proper_nouns():
     proper_nouns = []
+    #For every synset in wordnet
     for synset in wn.all_synsets():
         synset_name = synset.name()
         synset_def = synset.definition()
+        #Wordnet definitions start with an uppercase letter if they're proper nouns
         if synset_def[0].isupper():
             proper_nouns.append([synset_name,synset_def])
     return proper_nouns
@@ -20,15 +19,13 @@ def seperate_proper_nouns():
 def create_mapped_database(pie_roots_dict : dict):
     mapped_database = {}
     subset_database = {}
-    count = 0
 
     for synset in wn.all_synsets():
         synset_name = synset.name()
         synset_def = synset.definition()
         pure_name = synset_name.split('.')[0]
+        #If a proper noun, skip
         if synset_def[0].isupper():
-            # print(synset_name)
-            count += 1
             continue
         #Normal brute force
         if synset_def in pie_roots_dict:
@@ -61,6 +58,7 @@ def create_mapped_database(pie_roots_dict : dict):
             
     return mapped_database, subset_database
 
+#
 def extract_PIE_root_defs():
     root_defs_dict = {}
     
@@ -81,8 +79,22 @@ def extract_PIE_root_defs():
     
     return root_defs_dict
 
-import pandas as pd
-import csv
+def create_unmapped_database(pie_roots_dict : dict, mapped_roots_dict : dict):
+    unmapped_database = {}
+
+    key_list = list(pie_roots_dict.keys())
+    val_list = list(pie_roots_dict.values())
+    
+    for root in pie_roots_dict.values():
+        if root in mapped_roots_dict:
+            continue
+        else:
+            position = val_list.index(root)
+            unmapped_database[root] = [key_list[position]]
+            # unmapped_database[key_list[position]] = key_list[position]
+
+    return unmapped_database
+
 
 def save_dict_to_csv(dictionary, name):
     # Create a DataFrame from the dictionary
@@ -114,18 +126,17 @@ def save_list_to_csv(items, name):
 
 def main():
     #if file doesn't exist, create unmapped database, otherwise read in unmapped database
-
-    proper_nouns = seperate_proper_nouns()
-    save_list_to_csv(proper_nouns, "proper_n_synsets")
-
     pie_root_database : dict = extract_PIE_root_defs()
-
     brute_definition, brute_subset = create_mapped_database(pie_root_database)
 
-    print(len(brute_definition))
+    brute_unmapped = create_unmapped_database(pie_root_database, brute_definition)
 
     save_dict_to_csv(brute_definition, "brute_definition_map")
     save_dict_to_csv(brute_subset, "brute_definition_subset_map")
+    save_dict_to_csv(brute_unmapped, "unmapped_pie_roots")
+
+    proper_nouns : list = seperate_proper_nouns()
+    save_list_to_csv(proper_nouns, "proper_n_synsets")
 
 
 
