@@ -95,6 +95,29 @@ def create_unmapped_database(pie_roots_dict : dict, mapped_roots_dict : dict):
 
     return unmapped_database
 
+#Final 2d list should have an entry in each row, the columns of each row should look like the following
+#root, root definition, derivative(synset), derivative definition, language, form(noun, verb, etc.), dictionary
+def create_derbipie_sample_entries(pie_roots_dict : dict, mapped_roots_dict : dict):
+    entries = []
+
+    #This is needed because of the way pie_roots_dict is formatted, (key: definition, value: root)
+    key_list = list(pie_roots_dict.keys())
+    val_list = list(pie_roots_dict.values())
+
+    #loop through each value in each key
+    for root in mapped_roots_dict:
+        position = val_list.index(root)
+        root_def = key_list[position]
+        wordnet_synsets = mapped_roots_dict[root][0].split(', ')
+        for synset in wordnet_synsets:
+            synset_definition = wn.synset(synset).definition()
+            synset = synset.split(".")
+            synset_name = synset[0]
+            synset_form = synset[1]
+            entries.append([root, root_def, synset_name, synset_definition, "English", synset_form, "Wordnet"])
+
+    return entries
+
 
 def save_dict_to_csv(dictionary, name):
     # Create a DataFrame from the dictionary
@@ -118,7 +141,7 @@ def save_list_to_csv(items, name):
     csv_file_path = path + name + r'.csv'
 
     # Write the list to a CSV file
-    with open(csv_file_path, 'w', newline='') as csvfile:
+    with open(csv_file_path, 'w', newline='', encoding='utf-8') as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerows(items)
     return
@@ -134,6 +157,10 @@ def main():
     save_dict_to_csv(brute_definition, "brute_definition_map")
     save_dict_to_csv(brute_subset, "brute_definition_subset_map")
     save_dict_to_csv(brute_unmapped, "unmapped_pie_roots")
+
+    derbipie_entries = create_derbipie_sample_entries(pie_root_database, brute_definition)
+
+    save_list_to_csv(derbipie_entries, "wordnet_derbipie_entries")
 
     proper_nouns : list = seperate_proper_nouns()
     save_list_to_csv(proper_nouns, "proper_n_synsets")
