@@ -5,12 +5,14 @@ This folder contains the files, documents, and databases related to the DERBi PI
 * [Contribution](##Contribution)
 * [License](##License)
 ## Databases
-* Located in the `Databases` folder.
+* Located in the [Databases](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src/Databases) folder.
 * Contains multiple datbases:
+  * All files are formatted as a `.csv`.  
   * https://derbipie.as.uky.edu/results
   * Database packages from WordNet.
-  * Databases that are considered "clean":
-    * If WordNet contains a part of a word in the DERBi PIE database, there should not be any duplicates among the conjunction of the databases.   
+  * Databases that have been altered/cleaned/pruned:
+    * If WordNet contains a part of a word in the DERBi PIE database, there should not be any duplicates among the conjunction of the databases.
+    * If a word that exists in the modern lexicon but did not exist during the Proto-Indo European era, i.e. a word that has a definition with airplane.  
 ## Contribution
 If you want to contribute to this project, follow these steps:
 1. Fork the repository
