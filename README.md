@@ -55,4 +55,4 @@ The project's goal was accomplished by completing a set of steps:
 * Mapping Verification:
   * Removing improper definitions.
 ### Progress Report
-Currently there are over 1,000 mapped PIE roots to at least one WordNet synset. There has also been over 7,000 potential entries generated for the DERBi PIE Database.
+Currently there are over 1,000 mapped PIE roots to at least one WordNet synset. There have also been over 7,000 potential entries generated for the DERBi PIE Database.
