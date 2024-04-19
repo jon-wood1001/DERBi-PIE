@@ -30,6 +30,7 @@ Located in the [Scripts](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src
 * Most of the files contained in this folder are `Python` files. As a reference tool on how to get data from the WordNet database, a [Jupyter](https://github.com/jon-wood1001/DERBi-PIE/blob/main/src/Scripts/WordNet.ipynb) file is provided.
 * **Files**:
   * *.DS_Store* -
+  * *main.py* -
   * *brute_force_map.py* -
   * *data_verify.py* -
   * *dataprep.py* -
