@@ -16,10 +16,10 @@ Located in the [Databases](https://github.com/jon-wood1001/DERBi-PIE/tree/main/s
     * If WordNet contains a part of a word in the DERBi PIE database, there should not be any duplicates among the conjunction of the databases.
     * If a word that exists in the modern lexicon but did not exist during the Proto-Indo European era, i.e. a word that has a definition with airplane.
 * **Files**:
-  *  *brute_definition_map.csv* -
-  *  *cleaned_data.csv* -
-  *  *expanded_cleaned_data.csv* - Contains the PIE roots of the cleaned data.
-  *  *german_roots.csv* -
+  *  *brute_definition_map.csv* - this contains the pie roots mapped to english wordnet synsets
+  *  *cleaned_data.csv* - intermediate dataset of the cleaned PIE roots.
+  *  *expanded_cleaned_data.csv* - Contains the Final PIE roots of the cleaned data.
+  *  *german_roots.csv* - Manually identified german definitions in original database
   *  *proper_n_synsets.csv* - Data where the Proper Noun Synsets were removed.
   *  *unmapped_pie_roots.csv* - Contains data where the PIE roots are unmapped.
   *  *wordnet_derbiepie_entries.csv* - Contains potential entries into DERBi PIE.
@@ -30,13 +30,13 @@ Located in the [Scripts](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src
 * Most of the files contained in this folder are `Python` files. As a reference tool on how to get data from the WordNet database, a [Jupyter](https://github.com/jon-wood1001/DERBi-PIE/blob/main/src/Scripts/WordNet.ipynb) file is provided.
 * **Files**:
   * *.DS_Store* -
-  * *main.py* -
-  * *brute_force_map.py* -
-  * *data_verify.py* -
-  * *dataprep.py* -
-  * *simple_synset_generation.py* -
-  * *synset_mapping.py* -
-  * *transfertobabel.py* -
+  * *main.py* - main script
+  * *brute_force_map.py* - contains all functions for database manipulation
+  * *data_verify.py* - script for data verification of databases 
+  * *dataprep.py* - function that handles processing the original data
+  * *simple_synset_generation.py* - example test script
+  * *synset_mapping.py* - script that gives each synset an ID
+  * *transfertobabel.py* - babelnet experiment script
 
 ## Contribution
 If you want to contribute to this project, follow these steps:
