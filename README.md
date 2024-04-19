@@ -39,9 +39,9 @@ wn.synsets(“redundant”)
 ```
 **Expected Output**: `[Synset('excess.s.01'), Synset('pleonastic.s.01')]`
 ## Execution
-All files are located in the [Scripts](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src/Scripts) folder. Executions of any of the file should be in this folder. In the command line, use `cd src/Scripts` to navigate to the folder. For example, the command to execute the [brute_force_map.py](https://github.com/jon-wood1001/DERBi-PIE/blob/main/src/Scripts/brute_force_map.py) file is:
+All files are located in the [Scripts](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src/Scripts) folder. Executions of any of the file should be in this folder. In the command line, use `cd src/Scripts` to navigate to the folder. For example, the command to execute the [main.py](https://github.com/jon-wood1001/DERBi-PIE/blob/main/src/Scripts/main.py) file is:
 ```
-python brute_force_map.py
+python main.py
 ```
 ## Testing
 Executing the [simple_synset_generation.py](https://github.com/jon-wood1001/DERBi-PIE/blob/main/src/Scripts/simple_synset_generation.py) file serves as good test case to see if there were any changes to the main program. Testing was performed by cross referencing between the generated databases in the [Database](https://github.com/jon-wood1001/DERBi-PIE/tree/main/src/Databases) folder.
@@ -55,4 +55,4 @@ The project's goal was accomplished by completing a set of steps:
 * Mapping Verification:
   * Removing improper definitions.
 ### Progress Report
-Currently there are over 1,000 mapped PIE roots to at least one WordNet synset. There have also been over 7,000 potential entries generated for the DERBi PIE Database.
+Currently there are over 1,500 mapped PIE roots to at least one WordNet synset. There have also been over 18,000 potential entries generated for the DERBi PIE Database.
